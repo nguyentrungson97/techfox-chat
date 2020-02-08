@@ -1,10 +1,23 @@
-import React, { Component } from 'react'
-import './App.css'
+import React, { Component } from "react";
+import "./App.css";
+import { Grid } from "semantic-ui-react";
+import ColorPanel from "./ColorPanel/ColorPanel";
+import SidePanel from "./SidePanel/SidePanel";
+import Messages from "./Messages/Messages";
+import MetaPanel from "./MetaPanel/MetaPanel";
+const App = () => (
+  <Grid columns="equal" className="app" style={{ background: "#eee" }}>
+    <ColorPanel />
+    <SidePanel />
 
-class App extends Component {
-    render() {
-        return <div className="App">App</div>
-    }
-}
+    <Grid.Column style={{ marginLeft: 320 }}>
+      <Messages />
+    </Grid.Column>
 
-export default App
+    <Grid.Column width={4}>
+      <MetaPanel />
+    </Grid.Column>
+  </Grid>
+);
+
+export default App;
