@@ -90,7 +90,7 @@ export default class Register extends Component {
                             )}?d=identicon`,
                         })
                         .then(() => {
-                            this.savaUser(createdUser).then(() => {
+                            this.saveUser(createdUser).then(() => {
                                 console.log('user saved')
                             })
                         })
@@ -112,7 +112,7 @@ export default class Register extends Component {
         }
     }
 
-    savaUser = createdUser => {
+    saveUser = createdUser => {
         return this.state.usersRef.child(createdUser.user.uid).set({
             name: createdUser.user.displayName,
             avatar: createdUser.user.photoURL,
