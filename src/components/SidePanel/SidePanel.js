@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Menu } from "semantic-ui-react";
 import UserPanel from "./UserPanel";
 import Channel from "./Channel";
+import DirectMessages from "./DirectMessages";
 
 class SidePanel extends Component {
   render() {
@@ -12,10 +13,11 @@ class SidePanel extends Component {
         inverted
         fixed="left"
         vertical
-        style={{ background: "#4c3c4c", fontSize: "1.2rem" }}
+        style={{ background: "#2851A3", fontSize: "1.2rem" }}
       >
         <UserPanel currentUser={currentUser}></UserPanel>
         <Channel currentUser={currentUser} />
+        <DirectMessages currentUser={currentUser} />
       </Menu>
     );
   }

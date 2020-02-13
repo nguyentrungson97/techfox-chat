@@ -10,6 +10,8 @@ class Channel extends Component {
     channelName: "",
     channelDetail: "",
     channelRef: firebase.database().ref("channels"),
+    messageRef: firebase.database().ref("messages"),
+    notification: [],
     modal: false,
     firstLoad: true,
     activeChannel: ""
@@ -27,13 +29,19 @@ class Channel extends Component {
     let loadedChannels = [];
     this.state.channelRef.on("child_added", snap => {
       loadedChannels.push(snap.val());
-      console.log(loadedChannels);
       this.setState(
         {
           channels: loadedChannels
         },
         () => this.setFirstChannel()
       );
+      this.addNotification(snap.key);
+    });
+  };
+
+  addNotification = channelId => {
+    this.state.messageRef.on("value", snap => {
+      console.log(snap.val());
     });
   };
 
@@ -113,6 +121,9 @@ class Channel extends Component {
   channelChange = channel => {
     this.setActiveChannel(channel);
     this.props.setCurrentChannel(channel);
+    this.setState({
+      channel
+    });
   };
 
   setActiveChannel = channel => {

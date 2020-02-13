@@ -12,7 +12,8 @@ class Messages extends Component {
     user: this.props.currentUser,
     messages: [],
     messagesLoading: true,
-    searchKeyword: ""
+    searchKeyword: "",
+    searchResult: []
   };
 
   componentDidMount() {
@@ -61,26 +62,37 @@ class Messages extends Component {
       return result;
     }, []);
     this.setState({
-      messages: searchResult
-    })
+      searchResult
+    });
   };
 
+  displayMessages = messages =>
+    messages.length > 0 &&
+    messages.map(message => (
+      <Message
+        key={message.timestamp}
+        message={message}
+        user={this.state.user}
+      />
+    ));
   render() {
-    const { messagesRef, channel, user, messages } = this.state;
+    const {
+      messagesRef,
+      channel,
+      user,
+      messages,
+      searchKeyword,
+      searchResult
+    } = this.state;
 
     return (
       <React.Fragment>
         <MessagesHeader channel={channel} handleSearch={this.handleSearch} />
         <Segment>
           <Comment.Group className="messages">
-            {messages.length > 0 &&
-              messages.map(message => (
-                <Message
-                  key={message.timestamp}
-                  message={message}
-                  user={this.state.user}
-                />
-              ))}
+            {searchKeyword
+              ? this.displayMessages(searchResult)
+              : this.displayMessages(messages)}
           </Comment.Group>
         </Segment>
         <MessagesForm
