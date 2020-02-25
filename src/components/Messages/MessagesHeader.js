@@ -1,23 +1,40 @@
-import React, { Component } from "react";
+import React from "react";
 import { Header, Segment, Input, Icon } from "semantic-ui-react";
 
-export default class MessagesHeader extends Component {
+class MessagesHeader extends React.Component {
   render() {
-    const { channel, handleSearch } = this.props;
-    console.log(channel);
+    const {
+      channelName,
+      numUniqueUsers,
+      handleSearchChange,
+      searchLoading,
+      isPrivateChannel,
+      handleStar,
+      isChannelStarred
+    } = this.props;
+
     return (
       <Segment clearing>
+        {/* Channel Title */}
         <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0 }}>
           <span>
-            {channel ? `#${channel.name}` : ``}
-            <Icon name="star outline" color="black" />
+            {channelName}
+            {!isPrivateChannel && (
+              <Icon
+                onClick={handleStar}
+                name={isChannelStarred ? "star" : "star outline"}
+                color={isChannelStarred ? "yellow" : "black"}
+              />
+            )}
           </span>
-          <Header.Subheader>2 Users</Header.Subheader>
+          <Header.Subheader>{numUniqueUsers}</Header.Subheader>
         </Header>
-        {/* Search */}
+
+        {/* Channel Search Input */}
         <Header floated="right">
           <Input
-            onChange={handleSearch}
+            loading={searchLoading}
+            onChange={handleSearchChange}
             size="mini"
             icon="search"
             name="searchTerm"
@@ -28,3 +45,5 @@ export default class MessagesHeader extends Component {
     );
   }
 }
+
+export default MessagesHeader;
